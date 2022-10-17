@@ -1,0 +1,24 @@
+$('.js-example-basic-single.form-control.devices').change(function(){
+        const id_device = $(this).val();
+        const select2 = $('.js-example-basic-single.form-control.serials option')
+        $.ajax({
+            url: '<?= $this->Url->build(['controller' => 'Assign', 'action' => 'filterNameDevice']) ?>',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                id_device:id_device
+            },
+
+             headers: {
+                    'X-CSRF-Token': <?= json_encode($this->request->getParam('_csrfToken')); ?>
+                },
+                success: function (response) {
+                    data = response.load_html_comment;  
+                    select2
+                        .removeAttr('selected')
+                        .filter(`[value=${data[0]['serial']}]`)
+                        .attr('selected', true).change();
+                }
+
+        })
+    });

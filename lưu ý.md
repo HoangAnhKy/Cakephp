@@ -1,3 +1,5 @@
+#### nên kiểm tra điều kiện tồn tại, flag của giá trị trong database
+
 #### Cách truyền dữ liệu lên praram của router
 
 ```php
