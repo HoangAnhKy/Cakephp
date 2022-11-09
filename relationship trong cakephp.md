@@ -20,17 +20,62 @@ $this->hasOne('users', [
         ]);
 ```
 
--   để sử dụng chúng ta chỉ cần gọi `contain('Tên liên kết')`
+## để sử dụng chúng ta chỉ cần gọi `contain('Tên liên kết')`
 
 ```php
 $query = $this->find()->contain(['business_title', 'teams']);
 ```
 
--   sử dụng `machine` để search dữ liệu liên kết
+## sử dụng `machine` để search dữ liệu liên kết
 
 ```php
  $id = $param['team_id'];
             $query->matching('teams', function ($q) use ($id) {
                 return $q->where(['teams.id' => $id]);
             });
+```
+
+## sử dụng `notMatching` để tạo dữ liệu liên kết
+
+-   sử dụng cả 2 cũng được `notMatching` ngược lại với `Matching`
+
+```php
+public function get_data_device_join_assign()
+    {
+        $query = $this
+            ->find()
+            ->select(['Device.ID', 'Device.Name'])
+
+            ->notMatching('Assign', function($q) {
+                return $q
+                    ->where(
+                        ['Assign.status' => USING]
+                    )
+                    ->group('Assign.id');
+            })->toList();
+
+        return $query;
+    }
+```
+
+## thêm điều kiện so sánh khi dùng realationship
+
+```php
+$query = $this->find()->contain(['Assign' => function($q){
+            return $q->where(['Assign.status' => 2]);
+        }]);
+```
+
+## join tay, nhược điểm chỉ lấy được 1 bên
+
+```php
+$query = $this->find('ALL')
+            ->join([
+                'table' => 'Assign',
+                'alias' => 'a',
+                'type' => 'LEFT ',
+                'conditions' => ['a.del_flag' => UNDEL, 'a.active' => ACTIVE, 'a.device_id' => 'device.id']
+            ])
+            ->select(['Device.ID', 'Device.Name', 'a.status'])
+        ;
 ```

@@ -89,3 +89,4 @@ $this->end();
     $this->Flash->error('Fail!');// khai báo
     <?php echo $this->Flash->render(); ?> // lấy
 ```
+#https://nongdanit.info/php-mysql/mang-trong-php-va-cac-ham-xu-ly-mang.html
