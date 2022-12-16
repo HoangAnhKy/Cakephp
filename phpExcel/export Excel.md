@@ -4,6 +4,16 @@
     composer require dakota/cake-excel
 ```
 
+hoặc
+
+```json
+"require": {
+    //...
+        "phpoffice/phpspreadsheet": "^1.23"
+    },
+composer install || composer install --ignore-platform-req=php
+```
+
 # lấy đa ta đổ vào view report
 
 ```php
@@ -18,6 +28,20 @@ public function exportCourse($output_type = 'D')
         $this->render();
         return;
     }
+    //new version
+    // public function exportPartNo($output_type = 'D', $file = 'my_spreadsheet.xlsx'){
+    //     $data_export = [];
+    //     $date = date('d M Y h:i A');
+    //     $data_export = $this->m_partno->getAllDataPartNo()->toList();
+    //     $file = 'partno_report-'. date('Y-m-d'). '.xlsx';
+    //     $this->set(compact('data_export', 'output_type', 'file','date'));
+    //     $this->viewBuilder()->setLayout('xls/default');
+    //     $this->viewBuilder()->setTemplate('export_part_no');
+    //     $this->response->withDownload('partno' . date('Y-m-d'). '.xlsx');
+    //     $this->render();
+
+    //     return;
+    // }
 ```
 
 ## view
@@ -58,6 +82,9 @@ $styleArray = array(
 $objPHPExcel->setActiveSheetIndex(0);
 
 //$i++;
+
+//vẽ đường viền
+// $objPHPExcel->getActiveSheet()->getStyle("A5:D" . $i)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
 //call the function in the controller with $output_type = F and $file with complete path to the file, to generate the file in the server for example attach to email
 if (isset($output_type) && $output_type == 'F') {
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

@@ -66,7 +66,7 @@ $query = $this->find()->contain(['Assign' => function($q){
         }]);
 ```
 
-## join tay, nhược điểm chỉ lấy được 1 bên
+## join tay
 
 ```php
 $query = $this->find('ALL')
