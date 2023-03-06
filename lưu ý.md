@@ -13,6 +13,12 @@
 
 `composer create-project --prefer-dist cakephp/app:~4.0 app`
 
+#### thêm define
+
+-   tạo define trong config
+
+-   vào bootstrap khai báo nó `require __DIR__ . '/define.php';`
+
 #### Cài đặt debug
 
 `php composer.phar require cakephp/debug_kit`
@@ -89,4 +95,5 @@ $this->end();
     $this->Flash->error('Fail!');// khai báo
     <?php echo $this->Flash->render(); ?> // lấy
 ```
+
 #https://nongdanit.info/php-mysql/mang-trong-php-va-cac-ham-xu-ly-mang.html
