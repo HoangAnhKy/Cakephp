@@ -1,3 +1,0 @@
-<?php
-
-echo strtolower('CÔNG TY TNHH INFORMATION TECHNOLOGY SERVICES JAPAN GROUP');
