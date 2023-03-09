@@ -25,7 +25,7 @@ composer install || composer install --ignore-platform-req=php
         $data_export = $this->m_partno->getAllDataPartNo()->toList();
         $file = 'partno_report-'. date('Y-m-d'). '.xlsx';
         $this->set(compact('data_export', 'output_type', 'file','date'));
-        $this->viewBuilder()->setLayout('xls/default');// xóa bỏ lớp kế thừa
+        $this->viewBuilder()->setLayout('xls/default');
         $this->viewBuilder()->setTemplate('export_part_no');
         $this->response->withDownload('partno' . date('Y-m-d'). '.xlsx');
         $this->render();
@@ -36,8 +36,6 @@ composer install || composer install --ignore-platform-req=php
 
 ## view
 
-// có thể sửa lại csv
-
 ```php
 <?php
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -46,7 +44,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 // Create new PHPExcel object
 $objPHPExcel = new Spreadsheet();
-$objPHPExcel = IOFactory::load('uploads/template_excel/part_no.xlsx');// nếu có sửa dụng template
+$objPHPExcel = IOFactory::load('uploads/template_excel/part_no.xlsx');
 $objPHPExcel->getProperties()->setCreator("Admin");
 
 //HEADER
