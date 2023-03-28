@@ -24,6 +24,7 @@ $this->hasOne('users', [
 
 ```php
 $query = $this->find()->contain(['business_title', 'teams']);
+$query = $this->find()->contain(['business_title.User', 'teams']);
 ```
 
 ## sử dụng `machine` để search dữ liệu liên kết
