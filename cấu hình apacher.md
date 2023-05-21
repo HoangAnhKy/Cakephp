@@ -5,6 +5,11 @@
 <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs/internphp/kyha/webroot"
     ServerName testapp.local
+    # thêm ssl nếu muốn dùng. Thay port 80 thành 443 và chỉnh đường đẫn vào thư mục chứ file conf ssl
+    # muốn tạo ssl nhớ coi lại mkcert
+    # SSLEngine on
+    # SSLCertificateFile "crt/site.test/server.crt"
+    # SSLCertificateKeyFile "crt/site.test/server.key"
 </VirtualHost>
 
 ```
