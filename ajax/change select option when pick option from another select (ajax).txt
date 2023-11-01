@@ -22,3 +22,24 @@ $('.js-example-basic-single.form-control.devices').change(function(){
 
         })
     });
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Muốn nhận dữ liệu cần truyền từ backend đến font-end trong cakePHP có 2 kiểu
+
++ Nhận trực tiếp
++ Nhận qua data
+
+
+ví dụ nhận trực tiếp:
+```
+    // js
+    let a = `<?= json_encode( $data ?? [] ) ?>`
+```
+ví dụ nhận qua data
+``` 
+    // html
+    <p id="getData" data-id="1"> thông tin gì đó </p>
+
+    // js
+    let a = $('#getData).data('id'); //1
+```
