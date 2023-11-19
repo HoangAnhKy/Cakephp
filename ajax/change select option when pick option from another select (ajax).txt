@@ -43,3 +43,40 @@ ví dụ nhận qua data
     // js
     let a = $('#getData).data('id'); //1
 ```
+
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+- Muốn là tùy chỉnh thêm xóa sửa select option 
+
+```js
+    let previous_text = '';
+    let previous_value = '';
+    $(document).on('select2:opening', '.select-partno', function() {
+
+        // lưu lại các giá trị cũ khi mở cửa sổ select
+
+        let row = $(this).data('row');
+        previous_value = this.value;
+        previous_text = $('#select-partno-' + row + ' option:selected').text();
+
+        checkSelected()
+
+    }).on('change', '.select-partno', function() {
+
+        if (this.value != '') {
+
+            // xóa toàn bộ các giá trị vừa chọn ra khỏi các select khác
+            
+            $(".select-partno").not(this).find(`option[value='${this.value}']`).remove();
+        }
+
+        if (previous_value != '') {
+            
+            // các giá trị cũ sau khi được change lại sẽ được thêm vào cuối danh sách
+
+            $(`.select-partno option[value='${previous_value}']`).remove();
+
+            $(".select-partno").append("<option value='" + previous_value + "'>" + previous_text + "</option>");
+        }
+    });
+```
