@@ -35,25 +35,30 @@ class Application extends BaseApplication
 ```php
 public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
 {
+    $resolver = [
+        'className' => 'Authentication.Orm',
+        'userModel' => 'Auth',
+    ];
+
+    $fields =  [
+        'username' => 'email',
+        'password' => 'password',
+    ];
+
     $authenticationService = new AuthenticationService([
         'unauthenticatedRedirect' => Router::url('/users/login'),
         'queryParam' => 'redirect',
     ]);
 
     $authenticationService->loadIdentifier('Authentication.Password', [
-        'fields' => [
-            'username' => 'email',
-            'password' => 'password',
-        ]
+//        'resolver' => $resolver, // dùng khi khác table Users
+        'fields' => $fields
     ]);
 
     $authenticationService->loadAuthenticator('Authentication.Session');
 
     $authenticationService->loadAuthenticator('Authentication.Form', [
-        'fields' => [
-            'username' => 'email',
-            'password' => 'password',
-        ],
+        'fields' => $fields
         'loginUrl' => Router::url('/users/login'),
     ]);
 
