@@ -1,6 +1,6 @@
 [Tham khảo JWT Cakephp 4](https://book.cakephp.org/4/en/tutorials-and-examples/cms/authentication.html)
 
-Để tạo JWT cho website với cakephp thì phải làm như sau
+# Để tạo JWT cho website với cakephp thì phải làm như sau
 
 B1: Trong `src/Application.php`, thêm các mục nhập sau:
 - Sử dụng các thư viện sau:
@@ -120,3 +120,50 @@ public function logout()
 **Lưu ý**
 - $this->Authentication->getResult() : dùng để lấy accound đang đăng nhập
 - $this->Authentication->logout()    : dùng để xóa tài khoản đang đăng nhập
+***
+ # **SSO**
+- Để thêm SSO đăng nhập một lần sài cho các ứng dụng con thì chúng ta sẽ thêm token
+B1: tạo key mã hóa
+```php
+    hash('sha256', 'key') // để tạo mã hóa dùng chung
+```
+B2: Trong hàm `Login` thêm các thông tin của user đăng nhập vào và mã hóa nó. Có thể cùng chung với [jwt](#để-tạo-jwt-cho-website-với-cakephp-thì-phải-làm-như-sau)
+```php
+// use Firebase\JWT\JWT;
+
+// mã hóa lại user tokent
+$token_user = JWT::encode([
+                'code' => time().uniqid(),
+                'login_success' => 1,
+            ], 'key','HS256');
+
+// mã hóa token để gắn vào cookie
+$token = Security::encrypt($token_user, Key);  // với Key là key mã hóa ở bước 1
+
+// set nó vào Domain mong muốn
+setcookie("auth_sys", $token, time() + 86400 * 3600, "/", DOMAIN); // cookie hoạt động trong 1 tiếng
+
+/*
+    setcookie(
+        string $name,
+        string $value = "",
+        int $expires_or_options = 0,
+        string $path = "",
+        string $domain = "",
+        bool $secure = false,
+        bool $httponly = false
+    ): bool
+*/
+```
+**Lưu ý**
+
+- Muốn đăng xuất (`logout`) thì phải xóa bỏ toàn bộ `cookie`
+```php
+    setcookie("auth_sys", "", time() - 3600, "/", DOMAIN);
+    $session = $this->request->getSession();
+    $session->destroy();
+```
+- Nếu chưa cài JWT (JSON WEB TOKENT) thì cài thêm
+```sh
+composer require firebase/php-jwt
+```
