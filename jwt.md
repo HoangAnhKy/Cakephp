@@ -155,6 +155,12 @@ setcookie("auth_sys", $token, time() + 86400 * 3600, "/", DOMAIN); // cookie ho�
     ): bool
 */
 ```
+B3: Bên phía Domain con muốn đọc tài khoản thì phải kiểm tra có `cookie` không, nếu có thì lấy không thì cho người ta đăng nhập lại
+```php
+        if ($_COOKIE['auth_sys']){
+            $token_decrypt = Security::decrypt($_COOKIE['auth_sys'], Key); // với Key là key mã hóa ở bước 1
+        }
+```
 **Lưu ý**
 
 - Muốn đăng xuất (`logout`) thì phải xóa bỏ toàn bộ `cookie`
