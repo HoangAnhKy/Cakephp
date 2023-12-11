@@ -1,4 +1,5 @@
 [Tham khảo JWT Cakephp 4](https://book.cakephp.org/4/en/tutorials-and-examples/cms/authentication.html)
+[Demo](https://github.com/HoangAnhKy/Cakephp/blob/main/demo_sso.zip)
 
 # Để tạo JWT cho website với cakephp thì phải làm như sau
 
