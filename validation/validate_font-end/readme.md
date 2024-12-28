@@ -163,3 +163,27 @@ $(document).ready(function () {
   });
 });
 ```
+
+# Dùng jquery validate bất đồng bộ
+
+```js
+$.validator.addMethod("duplicate", function(value, element) {
+  let valid;
+  $.ajax({
+      url:'{{ route("check-course") }}',
+      type:"POST",
+      dataType:"json",
+      data : {
+          name: value
+      },
+      async: false,
+      success:function(response){
+          valid = response;
+      }
+  });
+
+  console.log(valid);
+  // $.validator.messages["methodName"] = errorMsg;
+  return false;
+}, '');
+```
