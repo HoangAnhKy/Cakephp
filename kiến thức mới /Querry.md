@@ -1,3 +1,14 @@
+
+- [get data có paginate](#get-data-có-paginate)
+- [join bảng](#join-bảng)
+  - [contain](#contain)
+  - [join tay](#join-tay)
+- [tips find](#tips-find)
+- [Lưu](#lưu)
+- [sửa](#sửa)
+- [Xóa](#xóa)
+***
+
 # get data có paginate
 
 ```php

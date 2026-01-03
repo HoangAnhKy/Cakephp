@@ -1,3 +1,15 @@
+- [Cách truyền dữ liệu lên praram của router](#cách-truyền-dữ-liệu-lên-praram-của-router)
+  - [đặt tên cho router](#đặt-tên-cho-router)
+  - [sài slug](#sài-slug)
+- [Cài đặt mới](#cài-đặt-mới)
+- [thêm define](#thêm-define)
+- [dùng stack/push của laravel trên cakephp](#dùng-stackpush-của-laravel-trên-cakephp)
+- [kế  thừa layout khác](#kế--thừa-layout-khác)
+- [dùng yield trong cakephp](#dùng-yield-trong-cakephp)
+- [flas session](#flas-session)
+- [khi khởi tạo controllerm nếu có view thì view chính là tên của controller đó. Chú ý cách đặt tên](#khi-khởi-tạo-controllerm-nếu-có-view-thì-view-chính-là-tên-của-controller-đó-chú-ý-cách-đặt-tên)
+- [với file error 400 hoặc 500 có thể  custom lại cho nó đẹp bằng cách chỉnh sửa giao diện trong đó.](#với-file-error-400-hoặc-500-có-thể--custom-lại-cho-nó-đẹp-bằng-cách-chỉnh-sửa-giao-diện-trong-đó)
+***
 
 # Cách truyền dữ liệu lên praram của router
 
