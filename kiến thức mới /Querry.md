@@ -94,3 +94,29 @@ public function user()
         ->limit(10)->page(1)->all()->toArray();
 }
 ```
+
+# Lưu
+
+```php
+$table = $this->fetchTable(UsersTable::class);
+$request = [
+    "name" => "k_" . uniqid(),
+    "email" => "k_" . uniqid() . "@k.k",
+    "password" => password_hash("123456", PASSWORD_DEFAULT)
+];
+$entity = $table->newEntity($request);
+dd($table->save($entity));
+```
+
+# sửa 
+
+```php
+$request = [
+    "email" => "k_" . uniqid() . "@k.k",
+];
+$user = $table->query()->where([
+    "id" => "2023159"
+])->first();
+$entity = $table->patchEntity($user, $request);
+dd($table->save($entity));
+```
