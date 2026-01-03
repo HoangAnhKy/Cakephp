@@ -120,3 +120,11 @@ $user = $table->query()->where([
 $entity = $table->patchEntity($user, $request);
 dd($table->save($entity));
 ```
+
+
+# Xóa 
+
+```php
+$user = $table->query()->where(["id" => "2023159"])->first();
+dd($table->delete($user));
+```
