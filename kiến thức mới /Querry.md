@@ -7,6 +7,7 @@
 - [Lưu](#lưu)
 - [sửa](#sửa)
 - [Xóa](#xóa)
+- [Transaction](#transaction)
 ***
 
 # get data có paginate
@@ -138,4 +139,21 @@ dd($table->save($entity));
 ```php
 $user = $table->query()->where(["id" => "2023159"])->first();
 dd($table->delete($user));
+```
+
+# Transaction
+nếu code chạy save thành công thì sẽ lưu ngược lại
+```php
+$connection = ConnectionManager::get('default'); //get database default
+if(!empty($_FILES['importFile']))
+{
+    $connection->begin();
+    $result = $this->importFileExcel($_FILES); // callback function different, this function result boolean true or false
+}
+if($result){
+    $this->Flash->success('Import success');
+    $connection->commit();
+}else{
+    $connection->rollback();
+}
 ```
