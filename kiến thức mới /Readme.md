@@ -108,6 +108,7 @@ hoặc là gọi trong controller
 public function home()
 {
     $this->viewBuilder()->setLayout('default2');
+    $this->set(compact('table')); // truyền dữ liệu
 }
 ```
 # dùng yield trong cakephp

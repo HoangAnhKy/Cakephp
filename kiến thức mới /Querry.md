@@ -3,6 +3,9 @@
 - [join bảng](#join-bảng)
   - [contain](#contain)
   - [join tay](#join-tay)
+  - [sử dụng `machine` để search dữ liệu liên kết](#sử-dụng-machine-để-search-dữ-liệu-liên-kết)
+  - [sử dụng `notMatching` để tạo dữ liệu liên kết](#sử-dụng-notmatching-để-tạo-dữ-liệu-liên-kết)
+  - [thêm điều kiện so sánh khi dùng realationship](#thêm-điều-kiện-so-sánh-khi-dùng-realationship)
 - [tips find](#tips-find)
 - [Lưu](#lưu)
 - [sửa](#sửa)
@@ -79,6 +82,45 @@ public function users()
     dd($data);
     // ...
 }
+```
+## sử dụng `machine` để search dữ liệu liên kết
+
+```php
+ $id = $param['team_id'];
+            $query->matching('teams', function ($q) use ($id) {
+                return $q->where(['teams.id' => $id]);
+            });
+```
+
+## sử dụng `notMatching` để tạo dữ liệu liên kết
+
+-   sử dụng cả 2 cũng được `notMatching` ngược lại với `Matching`
+
+```php
+public function get_data_device_join_assign()
+    {
+        $query = $this
+            ->find()
+            ->select(['Device.ID', 'Device.Name'])
+
+            ->notMatching('Assign', function($q) {
+                return $q
+                    ->where(
+                        ['Assign.status' => USING]
+                    )
+                    ->group('Assign.id');
+            })->toList();
+
+        return $query;
+    }
+```
+
+## thêm điều kiện so sánh khi dùng realationship
+
+```php
+$query = $this->find()->contain(['Assign' => function($q){
+            return $q->where(['Assign.status' => 2]);
+        }]);
 ```
 
 # tips find 
