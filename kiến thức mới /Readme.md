@@ -9,6 +9,7 @@
 - [flas session](#flas-session)
 - [khi khởi tạo controllerm nếu có view thì view chính là tên của controller đó. Chú ý cách đặt tên](#khi-khởi-tạo-controllerm-nếu-có-view-thì-view-chính-là-tên-của-controller-đó-chú-ý-cách-đặt-tên)
 - [với file error 400 hoặc 500 có thể  custom lại cho nó đẹp bằng cách chỉnh sửa giao diện trong đó.](#với-file-error-400-hoặc-500-có-thể--custom-lại-cho-nó-đẹp-bằng-cách-chỉnh-sửa-giao-diện-trong-đó)
+- [Luồng request thật sự của CakePHP](#luồng-request-thật-sự-của-cakephp)
 ***
 
 # Cách truyền dữ liệu lên praram của router
@@ -183,4 +184,29 @@ public function home()
 </div>
 </body>
 </html>
+```
+
+# Luồng request thật sự của CakePHP
+
+Cake chạy theo thứ tự:
+- `Middleware` (AuthenticationMiddleware, CSRF, Routing…)
+- `Controller` được tạo
+- `initialize()`
+- `beforeFilter()`
+- `action()` (login, index, view…)
+- `afterFilter()`
+- Response trả về
+
+
+ví dụ 
+
+```php
+use Cake\Event\EventInterface;
+// AController
+public function beforeFilter(EventInterface $event)
+{
+    parent::beforeFilter($event);
+
+    $this->Authentication->addUnauthenticatedActions(['login']);
+}
 ```

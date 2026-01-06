@@ -59,7 +59,7 @@ public function getAuthenticationService(ServerRequestInterface $request): Authe
     $authenticationService->loadAuthenticator('Authentication.Session');
 
     $authenticationService->loadAuthenticator('Authentication.Form', [
-        'fields' => $fields
+        'fields' => $fields,
         'loginUrl' => Router::url('/users/login'),
     ]);
 
@@ -119,8 +119,24 @@ public function logout()
 }
 ```
 **Lưu ý**
-- $this->Authentication->getResult() : dùng để lấy accound đang đăng nhập
-- $this->Authentication->logout()    : dùng để xóa tài khoản đang đăng nhập
+- `$this->Authentication->getResult()` : Lấy kết quả xác thực (authentication result) của request hiện tại
+- `$this->Authentication->logout()`    : dùng để xóa tài khoản đang đăng nhập
+
+- `$this->Authentication->setIdentity($user)`: set user có sẵn
+
+    ```php
+    public function login(){
+        $user = $this->fetchTable(UsersTable::class)->get(1); // user có sẵn
+
+        $this->Authentication->setIdentity($user);
+        return $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode([
+                'success' => true,
+                'user' => $user,
+            ]));
+    }
+    ```
 ***
  # **SSO**
 - Để thêm SSO đăng nhập một lần sài cho các ứng dụng con thì chúng ta sẽ thêm token
@@ -162,7 +178,8 @@ B3: Bên phía Domain con muốn đọc tài khoản thì phải kiểm tra có 
             $token_decrypt = Security::decrypt($_COOKIE['auth_sys'], Key); // với Key là key mã hóa ở bước 1
         }
 ```
-**Lưu ý**
+
+**Lưu ý kết luận**
 
 - Muốn đăng xuất (`logout`) thì phải xóa bỏ toàn bộ `cookie`
 ```php
@@ -173,4 +190,19 @@ B3: Bên phía Domain con muốn đọc tài khoản thì phải kiểm tra có 
 - Nếu chưa cài JWT (JSON WEB TOKENT) thì cài thêm
 ```sh
 composer require firebase/php-jwt
+```
+
+- Nếu muốn chỉnh controller khác login, trong hàm `getAuthenticationService` thay chỗ  URL
+
+```php
+//...
+$authenticationService = new AuthenticationService([
+    'unauthenticatedRedirect' => Router::url('/login'),
+    'queryParam' => 'redirect',
+]);
+// ....
+$authenticationService->loadAuthenticator('Authentication.Form', [
+    'fields' => $fields,
+    'loginUrl' => Router::url('/login'),
+]);
 ```
